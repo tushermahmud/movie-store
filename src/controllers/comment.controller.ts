@@ -9,7 +9,7 @@ export const createComment = async (req: any, res: Response) => {
   }
   const newComment = new Comment({
     content: req.body.content,
-    userId: req.user._id,
+    userId: req.user.id,
     movieId: req.params.movieId,
   });
   try {
@@ -27,6 +27,15 @@ export const deleteComment = async (req: Request, res: Response) => {
       return res.status(404).json({ error: "Comment not found" });
     }
     res.status(200).json(comment);
+  } catch (error: any) {
+    return res.status(500).json({ error: error.message });
+  }
+};
+
+export const getCommentsByMovieId = async (req: Request, res: Response) => {
+  try {
+    const comments = await Comment.find({ movieId: req.params.movieId });
+    res.status(200).json(comments);
   } catch (error: any) {
     return res.status(500).json({ error: error.message });
   }
