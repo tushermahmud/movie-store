@@ -250,3 +250,24 @@ export const movieRemoveFromFavorites = async (req: any, res: Response) => {
     return res.status(400).json({ error: "Movie not in favorites" });
   }
 };
+
+export const getFavorites = async (req: any, res: Response) => {
+  try {
+    const user = await User.findById(req.user.id).populate("favorites");
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    return res.status(200).json(user.favorites);
+  } catch (error: any) {
+    return res.status(500).json({ error: error.message });
+  }
+};
+
+
+export const getUserByEmail = async (req: any, res: Response) => {
+  const user = await User.findOne({ email: req.user.email });
+  if (!user) {
+    return res.status(404).json({ error: "User not found" });
+  }
+  return res.status(200).json(user);
+};

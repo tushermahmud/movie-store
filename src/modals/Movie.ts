@@ -5,6 +5,8 @@ const movieSchema = new mongoose.Schema({
   description: String,
   runningTime: Number,
   thumbnail: String,
+  rating: Number,
+  duration: Number,
 });
 
 export default mongoose.model('Movie', movieSchema);

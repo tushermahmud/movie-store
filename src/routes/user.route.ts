@@ -2,6 +2,8 @@ import express from "express";
 import {
   createUser,
   forgetPassword,
+  getFavorites,
+  getUserByEmail,
   login,
   movieAddToFavorites,
   movieRemoveFromFavorites,
@@ -333,5 +335,7 @@ router.put("/password/reset", resetPassword);
 
 router.post("/:movieId/add-to-favorites", authCheck, movieAddToFavorites);
 router.post("/:movieId/remove-from-favorites", authCheck, movieRemoveFromFavorites);
+router.get("/favorites", authCheck, getFavorites);
+router.post("/user-by-email", authCheck, getUserByEmail);
 
 export default router;

@@ -131,6 +131,8 @@ router.post(
       .isNumeric()
       .withMessage("Running time must be a number"),
     check("thumbnail").notEmpty().withMessage("Thumbnail URL is required"),
+    check("rating").notEmpty().withMessage("Rating is required"),
+    check("duration").notEmpty().withMessage("Duration is required"),
   ],
   authCheck,
   isAdmin,
