@@ -12,11 +12,22 @@ export const createComment = async (req: any, res: Response) => {
     userId: req.user._id,
     movieId: req.params.movieId,
   });
-  await newComment.save();
-  res.status(201).json(newComment);
+  try {
+    await newComment.save();
+    res.status(201).json(newComment);
+  } catch (error: any) {
+    return res.status(500).json({ error: error.message });
+  }
 };
 
 export const deleteComment = async (req: Request, res: Response) => {
-  const comment = await Comment.findByIdAndDelete(req.params.id);
-  res.status(200).json(comment);
+  try {
+    const comment = await Comment.findByIdAndDelete(req.params.id);
+    if (!comment) {
+      return res.status(404).json({ error: "Comment not found" });
+    }
+    res.status(200).json(comment);
+  } catch (error: any) {
+    return res.status(500).json({ error: error.message });
+  }
 };

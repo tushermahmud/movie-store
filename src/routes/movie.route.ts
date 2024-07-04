@@ -1,5 +1,5 @@
 import express from "express";
-import { getAllMovies, createMovie, deleteMovie } from "../controllers/movie.controller";
+import { getAllMovies, createMovie, deleteMovie, getMovieById } from "../controllers/movie.controller";
 import authCheck from "../middleware/auth";
 import isAdmin from "../middleware/isAdmin";
 import { check } from "express-validator";
@@ -172,3 +172,5 @@ export default router;
  *         description: Movie not found
  */
 router.delete("/:id", authCheck, isAdmin, deleteMovie);
+
+router.get("/:id", authCheck, getMovieById);
