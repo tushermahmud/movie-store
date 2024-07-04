@@ -3,9 +3,12 @@ import {
   createUser,
   forgetPassword,
   login,
+  movieAddToFavorites,
+  movieRemoveFromFavorites,
   resetPassword,
 } from "../controllers/user.controller";
 import { check } from "express-validator";
+import authCheck from "../middleware/auth";
 
 const router = express.Router();
 
@@ -327,5 +330,8 @@ router.put(
  *                   example: "Server error!"
  */
 router.put("/password/reset", resetPassword);
+
+router.post("/:movieId/add-to-favorites", authCheck, movieAddToFavorites);
+router.post("/:movieId/remove-from-favorites", authCheck, movieRemoveFromFavorites);
 
 export default router;

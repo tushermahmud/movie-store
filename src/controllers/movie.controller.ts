@@ -22,3 +22,4 @@ export const deleteMovie = async (req: Request, res: Response) => {
   const movie = await Movie.findByIdAndDelete(req.params.id);
   res.status(200).json(movie);
 };
+

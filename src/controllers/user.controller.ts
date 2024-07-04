@@ -35,7 +35,6 @@ export const createUser = async (req: Request, res: Response) => {
           });
           const userDataToSave = await user.save();
           return res.status(200).json(userDataToSave);
-          
         }
       );
     } else {
@@ -99,8 +98,6 @@ export const login = async (req: Request, res: Response) => {
     });
   }
 };
-
-
 
 export const forgetPassword = async (req: Request, res: Response) => {
   const { email } = req.body;
@@ -213,5 +210,43 @@ export const resetPassword = async (req: Request, res: Response) => {
     return res.status(500).json({
       error: error.message,
     });
+  }
+};
+
+export const movieAddToFavorites = async (req: any, res: Response) => {
+  const { movieId } = req.params;
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    if (!user.favorites.includes(movieId)) {
+      user.favorites.push(movieId);
+      await user.save();
+      return res.status(200).json({ message: "Movie added to favorites" });
+    } else {
+      return res.status(400).json({ error: "Movie already in favorites" });
+    }
+  } catch (error: any) {
+    return res.status(500).json({
+      error: error.message,
+    });
+  }
+};
+
+export const movieRemoveFromFavorites = async (req: any, res: Response) => {
+  const { movieId } = req.params;
+  const user = await User.findById(req.user.id);
+  if (!user) {
+    return res.status(404).json({ error: "User not found" });
+  }
+
+  const index = user.favorites.indexOf(movieId);
+  if (index > -1) {
+    user.favorites.splice(index, 1);
+    await user.save();
+    return res.status(200).json({ message: "Movie removed from favorites" });
+  } else {
+    return res.status(400).json({ error: "Movie not in favorites" });
   }
 };

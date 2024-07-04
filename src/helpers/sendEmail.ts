@@ -1,5 +1,4 @@
 import nodemailer from "nodemailer";
-import { EmailData } from "../interface";
 import 'dotenv/config';
 
 const transporter = nodemailer.createTransport({
@@ -13,7 +12,7 @@ const transporter = nodemailer.createTransport({
 });
 
 
-export const sendEmail = async(emailData: EmailData) => {
+export const sendEmail = async(emailData: any) => {
     if (!emailData.to) {
         return "Reciever is required!";
     }
