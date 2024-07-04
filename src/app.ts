@@ -18,6 +18,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 const corsOptions = {
   origin: "http://localhost:3000",
+  credentials: true,
+  allowedHeaders: "Content-Type",
   optionsSuccessStatus: 200,
 };
 app.use(cors(corsOptions));
